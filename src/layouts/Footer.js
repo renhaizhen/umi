@@ -1,9 +1,12 @@
 import React from 'react'
-
-export default function Footer() {
+import {Layout,Icon} from 'antd'
+const {Footer} = Layout
+const  Footers = ()=> {
     return (
-        <div>
-            footers
-        </div>
+        <Footer className="footer">
+            Copyright<Icon type="copyright"/>Heson
+        </Footer>
     )
 }
+
+export default Footers
