@@ -34,4 +34,11 @@ export default {
       },
     }],
   ],
+  //配置代理
+  proxy:{
+    '/api':{
+      target:'https://cjy-react-interface.herokuapp.com/',
+      changeOrigin:true
+    }
+  }
 }

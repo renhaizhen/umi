@@ -6,10 +6,24 @@
 //react 约定式路由 
 //当你在pages下面有创建就可以自动跳转到相应的页面
 import React from 'react'
+import { login } from './service/login'
+import router from 'umi/router'
 import { Layout , Icon , Form ,Button , Input } from 'antd'
 import styles from './index.scss'
 const { Content , Footer } = Layout
  const index = ({form}) => {
+     //校验表单输入内容
+     const handleSubmit = () =>{
+        //form 校验 err失败 values 成功之后的值
+        form.validateFields((err, values) => {
+            if (!err) {
+              //console.log('Received values of form: ', values);
+              //发起请求
+               login(values)
+               .then(data=>router.push('/'))
+            }
+          });
+     }
     return (
         <Layout>
             <Content className={styles.content}>
@@ -42,7 +56,7 @@ const { Content , Footer } = Layout
                                 )}
                             </Form.Item>
                             <Form.Item>
-                                <Button type="primary" style={{ width:'100%'}}>
+                                <Button onClick={handleSubmit} type="primary" style={{ width:'100%'}}>
                                     登录
                                 </Button>
                             </Form.Item>
