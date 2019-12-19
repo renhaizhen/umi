@@ -28,6 +28,12 @@ export default {
         const list = yield select(state => state.users.list)
         console.log(list)
       },
+      *add({ payload }, { call }) {
+        return yield call(userService.add, payload);
+      },
+      *edit({ payload:{id,value} }, { call }) {
+        return yield call(userService.edit, id,value);
+      },
     },
     //dva 订阅模式可自执行函数
     subscriptions:{
