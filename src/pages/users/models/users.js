@@ -1,4 +1,4 @@
-import * as userService from '../serivce/users'
+import * as userService from '../service/users'
 
 export default {
     namespace: 'users',
@@ -33,6 +33,9 @@ export default {
       },
       *edit({ payload:{id,value} }, { call }) {
         return yield call(userService.edit, id,value);
+      },
+      *remove({ payload}, { call }) {
+        return yield call(userService.remove, payload);
       },
     },
     //dva 订阅模式可自执行函数

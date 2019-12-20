@@ -24,12 +24,22 @@ export function add(params) {
  */
 export function edit(id, params) {
   // 发起请求 https://cjy-react-interface.herokuapp.com/api/users/edit_user
-  console.log(id, params);
   return request(`/api/users/edit_user/${id}`, {
     method: 'POST',
     body: JSON.stringify(params),
   });
 }
 
+
+  /**
+ * 删除用户
+ * @param {用户id} id
+ */
+export function remove(id) {
+  // 发起请求 https://cjy-react-interface.herokuapp.com/api/users/edit_user
+  return request(`/api/users/delete_user/${id}`, {
+    method: 'DELETE'
+  });
+}
 
 //异常处理放到统一的 utils/request.js

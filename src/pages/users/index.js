@@ -1,8 +1,11 @@
 /**
- * title:用户
+ * title: 用户
+ * Routes:
+ *   - ./src/routes/PrivateRoute.js
+ * authority: ["admin"]
  */
 import React from 'react'
-import {Button,Message} from 'antd'
+import {Button,Message, Popconfirm} from 'antd'
 import {Content,Tool} from '@/components/Layout'
 import Table from '@/components/Table'
 import { connect } from 'dva'
@@ -41,8 +44,10 @@ import UserModal from './components/UserModal'
                  title='编辑用户' 
                  record={record}>
                   <a>编辑</a>
-                  <a> 删除</a>
                 </UserModal>
+                <Popconfirm title="确定删除该用户" onConfirm={()=>handleDelete(record.id)}>
+                    <a>删除</a>
+                </Popconfirm>
               </div>
             ),
           },
@@ -68,24 +73,37 @@ import UserModal from './components/UserModal'
     //分页跳转
     const handlePageChange = pageNum=>{
       // console.log(pageNum)
-      if(page!=pageNum){
-        dispatch({type:'users/fetch',payload:{page:pageNum}}).then(res=>{
-          if(res && res.state==="success"){
-            Message.success(res.msg||'编辑用户成功')
-            //reload
-            reload()
-            return res
-          }else{
-            Message.error('编辑用户失败')
-          }
-        })
+      if(page!==pageNum){
+        dispatch({type:'users/fetch',payload:{page:pageNum}})
       }
     }
 
     //编辑
     const handleEdit = (id,value)=>{
       console.log(value,id)
-      return dispatch({type:'users/edit',payload:{id,value}})
+      return dispatch({type:'users/edit',payload:{id,value}}).then(res=>{
+        if(res && res.state==="success"){
+          Message.success(res.msg||'编辑用户成功')
+          //reload
+          reload()
+          return res
+        }else{
+          Message.error('编辑用户失败')
+        }
+      })
+    }
+    //删除
+    const handleDelete = id =>{
+      dispatch({type:'users/remove',payload:id}).then(res=>{
+        if(res && res.state==="success"){
+          Message.success(res.msg||'删除用户成功')
+          //reload
+          reload()
+          return res
+        }else{
+          Message.error('删除用户失败')
+        }
+      })
     }
     return (
         <Content>
